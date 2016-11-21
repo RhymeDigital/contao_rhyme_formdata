@@ -67,7 +67,7 @@ class Export extends \Backend
 				$arrFields = array_unique($objFields->fetchEach('name'));
 				sort($arrFields);
 				$objFields->reset();
-				
+			
 				// Fill array keys with field names
 				$arrLabels = array_fill_keys($arrFields, '');
 				
@@ -76,6 +76,10 @@ class Export extends \Backend
 					$arrLabels[$objFields->name] = $objFields->label;
 				}
 			}
+			
+			// Add date too
+			$arrFields[] = 'rhyme_date';
+			$arrLabels['rhyme_date'] = 'Date';
 			
 			while ($objSubmissions->next())
 			{
@@ -101,6 +105,9 @@ class Export extends \Backend
 						$arrRow[$objData->current()->name] = $varValue;
 						$varValue = null;
 					}
+				
+					// Add date too
+					$arrRow['rhyme_date'] = date(\Config::get('datimFormat'), $objSubmissions->current()->tstamp);
 					
 					$arrData[] = $arrRow;
 					$arrRow = array();
