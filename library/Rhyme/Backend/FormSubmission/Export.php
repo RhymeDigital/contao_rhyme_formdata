@@ -102,7 +102,7 @@ class Export extends \Backend
 							$varValue = implode(',', $varValue);
 						}
 						
-						$arrRow[$objData->current()->name] = $varValue;
+						$arrRow[$objData->current()->name] = static::removeEmojis($varValue);
 						$varValue = null;
 					}
 				
@@ -140,6 +140,31 @@ class Export extends \Backend
 		}
 		
 		static::export($arrData, $strName);
+	}
+	
+	
+	/**
+	 * Remove emojis
+	 */
+	protected static function removeEmojis($strText)
+	{
+		// Regex grabbed from https://www.drupal.org/node/1910376.
+		// @see https://www.drupal.org/node/1910376
+		// @see http://webcollab.sourceforge.net/unicode.html
+		// Reject overly long 2 byte sequences, as well as characters above U+10000
+		// and replace with empty.
+		$regex = '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]';
+		$regex .= '|[\x00-\x7F][\x80-\xBF]+';
+		$regex .= '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*';
+		$regex .= '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})';
+		$regex .= '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S';
+		
+		$strText = preg_replace($regex, '', $strText);
+		
+		// Reject overly long 3 byte sequences and UTF-16 surrogates
+		$strText = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]' . '|\xED[\xA0-\xBF][\x80-\xBF]/S', '', $strText);
+		
+		return $strText;
 	}
 	
 }
