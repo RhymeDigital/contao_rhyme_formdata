@@ -64,9 +64,27 @@ class Export extends \Backend
 			
 			if ($objFields->numRows)
 			{
-				$arrFields = array_unique($objFields->fetchEach('name'));
-				sort($arrFields);
+				$arrFields = array_unique(array_map('trim', $objFields->fetchEach('name')));
 				$objFields->reset();
+				
+				// Try to sort by existing field order
+				$objExistingFields = \Database::getInstance()->prepare("SELECT name FROM ".\FormFieldModel::getTable()." WHERE LENGTH(TRIM(name)) > 0 AND pid=? ORDER BY sorting")
+												 ->execute($objSubmissions->first()->pid);
+				
+				// Reset submissions collection again
+				$objSubmissions->reset();
+				
+				// We have existing form fields, sort by them!
+				if ($objExistingFields->numRows)
+				{
+					$arrFields = array_flip(array_merge(array_flip($objExistingFields->fetchEach('name')), array_flip($arrFields)));
+				}
+				
+				// No existing form fields, just sort by name
+				else
+				{
+					sort($arrFields);
+				}
 			
 				// Fill array keys with field names
 				$arrLabels = array_fill_keys($arrFields, '');
