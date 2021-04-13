@@ -29,7 +29,7 @@ class ListCallbacks extends \Backend
 		
 		if (is_array($varValue))
 		{
-			$varValue = array_map('deserialize', implode(',', $varValue));
+			$varValue = implode(',', array_map('deserialize', $varValue));
 		}
 		
 		return $arrRow['label'] . ': ' . $varValue;
