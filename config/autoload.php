@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Copyright (C) 2015 Rhyme Digital
- * 
- * @author		Blair Winans <blair@rhyme.digital>
- * @author		Adam Fisher <adam@rhyme.digital>
- * @link		http://rhyme.digital
+ * Copyright (C) 2021 Rhyme Digital
+ *
+ * @link		https://rhyme.digital
  * @license		http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  */
  
 /**
  * Register namespace
  */
-NamespaceClassLoader::add('Rhyme', 'system/modules/rhyme_formdata/library');
+if (\class_exists('NamespaceClassLoader')) {
+    NamespaceClassLoader::add('Rhyme', 'system/modules/rhyme_formdata/library');
+}
