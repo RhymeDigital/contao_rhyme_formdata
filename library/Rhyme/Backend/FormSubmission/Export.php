@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021 Rhyme Digital
+ * Copyright (C) 2026 Rhyme Digital
  *
  * @link		https://rhyme.digital
  * @license		http://www.gnu.org/licenses/lgpl-3.0.html LGPL
@@ -9,11 +9,12 @@
 
 namespace Rhyme\Backend\FormSubmission;
 
+use Contao\Backend;
 use Rhyme\Model\FormSubmissionModel;
 use Rhyme\Model\FormSubmissionDataModel;
 
 
-class Export extends \Backend
+class Export extends Backend
 {
 	
 	/**
@@ -141,7 +142,7 @@ class Export extends \Backend
 		}
 		
 		// Auto set name
-		if ($strName == 'formsubmissions')
+		if ($strName === 'formsubmissions')
 		{
 			$strName = 'form_' . \Input::get('id') . '_' . $strName;
 		}

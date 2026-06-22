@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021 Rhyme Digital
+ * Copyright (C) 2026 Rhyme Digital
  *
  * @link		https://rhyme.digital
  * @license		http://www.gnu.org/licenses/lgpl-3.0.html LGPL
@@ -9,11 +9,12 @@
 
 namespace Rhyme\Hooks\ProcessFormData;
 
+use Contao\Frontend;
 use Rhyme\Model\FormSubmissionModel;
 use Rhyme\Model\FormSubmissionDataModel;
 
 
-class StoreFormDataDynamically extends \Frontend
+class StoreFormDataDynamically extends Frontend
 {
 	
 	/**
@@ -39,16 +40,16 @@ class StoreFormDataDynamically extends \Frontend
 			return;
 		}
 		
-		$arrFiles = is_array($arrFiles) ? $arrFiles : array();
+		$arrFiles = \is_array($arrFiles) ? $arrFiles : array();
 		
 		$objParent				= new FormSubmissionModel();
 		$objParent->pid			= $arrData['id'];
-		$objParent->tstamp		= time();
+		$objParent->tstamp		= \time();
 		$objParent->save();
 		
 		foreach ($arrSubmitted as $k=>$v)
 		{
-			if (array_key_exists($k, $arrFiles))
+			if (\array_key_exists($k, $arrFiles))
 			{
 				continue;
 			}
@@ -56,7 +57,7 @@ class StoreFormDataDynamically extends \Frontend
 			$objData				= new FormSubmissionDataModel();
 			$objData->pid			= $objParent->id;
 			$objData->name			= $k;
-			$objData->label			= strval($arrLabels[$k]);
+			$objData->label			= (string)($arrLabels[$k] ?? '');
 			$objData->value			= serialize($v);
 			$objData->save();
 		}
@@ -71,8 +72,8 @@ class StoreFormDataDynamically extends \Frontend
 					$objData				= new FormSubmissionDataModel();
 					$objData->pid			= $objParent->id;
 					$objData->name			= $k;
-					$objData->label			= strval($arrLabels[$k]);
-					$objData->value			= serialize(str_replace(TL_ROOT . '/', '', $v['tmp_name']));
+					$objData->label			= (string)($arrLabels[$k] ?? '');
+					$objData->value			= \serialize(\str_replace(TL_ROOT . '/', '', $v['tmp_name']));
 					$objData->save();
 				}
 			}

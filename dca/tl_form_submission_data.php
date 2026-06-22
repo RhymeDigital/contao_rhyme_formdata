@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021 Rhyme Digital
+ * Copyright (C) 2026 Rhyme Digital
  *
  * @link		https://rhyme.digital
  * @license		http://www.gnu.org/licenses/lgpl-3.0.html LGPL
@@ -11,13 +11,16 @@
 /**
  * Table tl_form_submission_data
  */
+
+use Contao\DC_Table;
+
 $GLOBALS['TL_DCA']['tl_form_submission_data'] = array
 (
 
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
 		'ptable'                      => 'tl_form_submission',
 		'closed'                      => true,
 		'notEditable'                 => true,
