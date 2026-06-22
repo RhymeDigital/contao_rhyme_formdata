@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021 Rhyme Digital
+ * Copyright (C) 2026 Rhyme Digital
  *
  * @link		https://rhyme.digital
  * @license		http://www.gnu.org/licenses/lgpl-3.0.html LGPL
@@ -9,6 +9,7 @@
 
 namespace Rhyme\Backend\FormSubmission\Export;
 
+use Contao\ModuleLoader;
 use Rhyme\Backend\FormSubmission\Export;
 
 
@@ -24,7 +25,7 @@ class Excel extends Export
 	 */
 	public static function run($dc=null, $strName='formsubmissions', $blnHeaders=true)
 	{
-		if (!in_array('!composer', \ModuleLoader::getActive()))
+		if (!in_array('!composer', ModuleLoader::getActive()))
 		{
 			\Message::addError($GLOBALS['TL_LANG']['ERR']['exportExcelNoComposer']);
 			\System::redirect(str_ireplace('&key=exportExcel', '', \Environment::get('request')));

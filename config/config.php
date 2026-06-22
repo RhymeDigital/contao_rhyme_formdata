@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021 Rhyme Digital
+ * Copyright (C) 2026 Rhyme Digital
  *
  * @link		https://rhyme.digital
  * @license		http://www.gnu.org/licenses/lgpl-3.0.html LGPL
@@ -31,5 +31,5 @@ $GLOBALS['BE_MOD']['content']['form']['tables'][] = 'tl_form_submission_data';
 /**
  * Models
  */
-$GLOBALS['TL_MODELS'][\Rhyme\Model\FormSubmissionModel::getTable()]				= 'Rhyme\Model\FormSubmissionModel';
-$GLOBALS['TL_MODELS'][\Rhyme\Model\FormSubmissionDataModel::getTable()]			= 'Rhyme\Model\FormSubmissionDataModel';
+$GLOBALS['TL_MODELS']['tl_form_submission']      = 'Rhyme\Model\FormSubmissionModel';
+$GLOBALS['TL_MODELS']['tl_form_submission_data'] = 'Rhyme\Model\FormSubmissionDataModel';
